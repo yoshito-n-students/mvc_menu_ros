@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(radial_menu_backend)
+project(mvc_menu_controllers)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -10,8 +10,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   nodelet
   pluginlib
-  radial_menu_model
-  radial_menu_msgs
+  mvc_menu_model
   roscpp
   sensor_msgs
 )
@@ -107,8 +106,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES radial_menu_backend_plugins
-  CATKIN_DEPENDS nodelet pluginlib radial_menu_model radial_menu_msgs roscpp sensor_msgs
+  LIBRARIES mvc_menu_controller_plugins
+  CATKIN_DEPENDS nodelet pluginlib mvc_menu_model roscpp sensor_msgs
 #  DEPENDS system_lib
 )
 
@@ -125,15 +124,15 @@ include_directories(
 
 ## Declare a C++ library
 add_library(
-  radial_menu_backend_plugins
-  src/radial_menu_backend_plugins.cpp
+  mvc_menu_controller_plugins
+  src/mvc_menu_controller_plugins.cpp
 )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 add_dependencies(
-  radial_menu_backend_plugins
+  mvc_menu_controller_plugins
   ${${PROJECT_NAME}_EXPORTED_TARGETS} 
   ${catkin_EXPORTED_TARGETS}
 )
@@ -162,7 +161,7 @@ add_dependencies(
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
-  radial_menu_backend_plugins
+  mvc_menu_controller_plugins
   ${catkin_LIBRARIES}
 )
 
@@ -189,7 +188,7 @@ target_link_libraries(
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
 install(
-  TARGETS radial_menu_backend_plugins
+  TARGETS mvc_menu_controller_plugins
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
@@ -214,7 +213,7 @@ install(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_radial_menu_backend.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_mvc_menu_controllers.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

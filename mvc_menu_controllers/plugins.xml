@@ -1,6 +1,6 @@
-<library path="lib/libradial_menu_backend_plugins">
+<library path="lib/libmvc_menu_controller_plugins">
 
-  <class name="radial_menu_backend/Backend" type="radial_menu_backend::BackendNodelet" 
+  <class name="mvc_menu_controllers/RadialController" type="mvc_menu_controllers::RadialNodelet" 
          base_class_type="nodelet::Nodelet">
     <description>
       Subscribes sensor_msgs/Joy and publish radial_menu_msgs/State

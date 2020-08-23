@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>radial_menu_backend</name>
+  <name>mvc_menu_controllers</name>
   <version>0.4.0</version>
-  <description>The radial_menu_backend package</description>
+  <description>The mvc_menu_controllers package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/radial_menu_backend</url> -->
+  <!-- <url type="website">http://wiki.ros.org/mvc_menu_controllers</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -51,20 +51,17 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>nodelet</build_depend>
   <build_depend>pluginlib</build_depend>
-  <build_depend>radial_menu_model</build_depend>
-  <build_depend>radial_menu_msgs</build_depend>
+  <build_depend>mvc_menu_model</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_export_depend>nodelet</build_export_depend>
   <build_export_depend>pluginlib</build_export_depend>
-  <build_export_depend>radial_menu_model</build_export_depend>
-  <build_export_depend>radial_menu_msgs</build_export_depend>
+  <build_export_depend>mvc_menu_model</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <exec_depend>nodelet</exec_depend>
   <exec_depend>pluginlib</exec_depend>
-  <exec_depend>radial_menu_model</exec_depend>
-  <exec_depend>radial_menu_msgs</exec_depend>
+  <exec_depend>mvc_menu_model</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
 
