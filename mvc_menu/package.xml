@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>radial_menu</name>
+  <name>mvc_menu</name>
   <version>0.4.0</version>
-  <description>The radial_menu package</description>
+  <description>The mvc_menu package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/radial_menu</url> -->
+  <!-- <url type="website">http://wiki.ros.org/mvc_menu</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -49,10 +49,9 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <exec_depend>radial_menu_backend</exec_depend>
-  <exec_depend>radial_menu_model</exec_depend>
-  <exec_depend>radial_menu_msgs</exec_depend>
-  <exec_depend>radial_menu_rviz</exec_depend>
+  <exec_depend>mvc_menu_controllers</exec_depend>
+  <exec_depend>mvc_menu_model</exec_depend>
+  <exec_depend>mvc_menu_rviz</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
