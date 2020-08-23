@@ -50,7 +50,7 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>mvc_menu_controllers</exec_depend>
-  <exec_depend>mvc_menu_model</exec_depend>
+  <exec_depend>mvc_menu_models</exec_depend>
   <exec_depend>mvc_menu_rviz</exec_depend>
 
 

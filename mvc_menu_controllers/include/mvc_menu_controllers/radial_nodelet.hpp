@@ -3,8 +3,8 @@
 
 #include <mvc_menu_controllers/backend_config.hpp>
 #include <mvc_menu_controllers/backend_controller.hpp>
-#include <mvc_menu_model/State.h>
-#include <mvc_menu_model/model.hpp>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/model.hpp>
 #include <nodelet/nodelet.h>
 #include <ros/exception.h>
 #include <ros/node_handle.h>
@@ -24,7 +24,7 @@ protected:
   virtual void onInit() {
     ros::NodeHandle nh(getNodeHandle()), pnh(getPrivateNodeHandle());
 
-    model_.reset(new mvc_menu_model::Model());
+    model_.reset(new mvc_menu_models::Model());
     if (!model_->setDescriptionFromParam(nh.resolveName("menu_description"))) {
       throw ros::Exception("Cannot set a model description from the param '" +
                            nh.resolveName("menu_description") + "'");
@@ -33,7 +33,7 @@ protected:
 
     controller_.reset(new RadialController(model_, RadialConfig::fromParamNs(pnh.getNamespace())));
 
-    state_pub_ = nh.advertise< mvc_menu_model::State >("menu_state", 1, true);
+    state_pub_ = nh.advertise< mvc_menu_models::State >("menu_state", 1, true);
     state_pub_.publish(model_->exportState());
     joy_sub_ = nh.subscribe("joy", 1, &RadialNodelet::onJoyRecieved, this);
   }
@@ -45,7 +45,7 @@ protected:
   }
 
 protected:
-  mvc_menu_model::ModelPtr model_;
+  mvc_menu_models::ModelPtr model_;
   RadialControllerPtr controller_;
 
   ros::Subscriber joy_sub_;

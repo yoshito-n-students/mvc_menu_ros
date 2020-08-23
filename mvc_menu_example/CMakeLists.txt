@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   joy
   message_filters
   mvc_menu_controllers
-  mvc_menu_model
+  mvc_menu_models
   mvc_menu_rviz
   roscpp
   roslaunch
@@ -115,7 +115,7 @@ catkin_package(
   joy 
   message_filters 
   mvc_menu_controllers 
-  mvc_menu_model 
+  mvc_menu_models
   mvc_menu_rviz 
   roscpp 
   roslaunch 

@@ -2,21 +2,20 @@
 
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
-#include <radial_menu_model/model.hpp>
-#include <radial_menu_msgs/State.h>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/model.hpp>
 #include <ros/console.h>
 #include <ros/init.h>
 #include <ros/node_handle.h>
 #include <sensor_msgs/Joy.h>
 
-radial_menu_model::Model model;
+namespace mmm = mvc_menu_models;
+
+mmm::Model model;
 std::string mode = "None";
 bool paused = true;
 
-void onSynchronized(const sensor_msgs::JoyConstPtr &joy,
-                    const radial_menu_msgs::StateConstPtr &state) {
-  namespace rmm = radial_menu_msgs;
-
+void onSynchronized(const sensor_msgs::JoyConstPtr &joy, const mmm::StateConstPtr &state) {
   if (!model.setState(*state)) {
     ROS_ERROR("onSynchronized(): Cannot set state to the model");
     return;
@@ -76,9 +75,8 @@ int main(int argc, char *argv[]) {
   }
 
   message_filters::Subscriber< sensor_msgs::Joy > joy_sub(nh, "joy", 1);
-  message_filters::Subscriber< radial_menu_msgs::State > menu_sub(nh, "teleop_menu_state", 1);
-  message_filters::TimeSynchronizer< sensor_msgs::Joy, radial_menu_msgs::State > sync_sub(
-      joy_sub, menu_sub, 10);
+  message_filters::Subscriber< mmm::State > menu_sub(nh, "teleop_menu_state", 1);
+  message_filters::TimeSynchronizer< sensor_msgs::Joy, mmm::State > sync_sub(joy_sub, menu_sub, 10);
   sync_sub.registerCallback(onSynchronized);
 
   ros::spin();

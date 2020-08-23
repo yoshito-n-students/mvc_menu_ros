@@ -2,33 +2,33 @@
 #include <ctime>
 #include <vector>
 
-#include <radial_menu_model/model.hpp>
-#include <radial_menu_msgs/State.h>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/model.hpp>
 #include <ros/console.h>
 #include <ros/init.h>
 #include <ros/node_handle.h>
 #include <ros/publisher.h>
 #include <ros/rate.h>
 
-namespace rmm = radial_menu_model;
+namespace mmm = mvc_menu_models;
 
 // **************************
 // Operations on a menu model
 // **************************
 
-rmm::ItemConstPtr randomSibiling(const rmm::ItemConstPtr &level) {
-  std::vector< rmm::ItemConstPtr > sibilings(level->sibilings());
+mmm::ItemConstPtr randomSibiling(const mmm::ItemConstPtr &level) {
+  std::vector< mmm::ItemConstPtr > sibilings(level->sibilings());
   std::random_shuffle(sibilings.begin(), sibilings.end());
-  for (const rmm::ItemConstPtr &s : sibilings) {
+  for (const mmm::ItemConstPtr &s : sibilings) {
     if (s) {
       return s;
     }
   }
-  return rmm::ItemConstPtr();
+  return mmm::ItemConstPtr();
 }
 
-bool point(rmm::Model *const model) {
-  const rmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
+bool point(mmm::Model *const model) {
+  const mmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
   if (model->canPoint(s)) {
     ROS_INFO_STREAM("Pointing '" << s->name() << "' ...");
     model->point(s);
@@ -38,8 +38,8 @@ bool point(rmm::Model *const model) {
   }
 }
 
-bool unpoint(rmm::Model *const model) {
-  const rmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
+bool unpoint(mmm::Model *const model) {
+  const mmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
   if (model->canUnpoint(s)) {
     ROS_INFO_STREAM("Unpointing '" << s->name() << "' ...");
     model->unpoint(s);
@@ -49,8 +49,8 @@ bool unpoint(rmm::Model *const model) {
   }
 }
 
-bool select(rmm::Model *const model) {
-  const rmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
+bool select(mmm::Model *const model) {
+  const mmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
   if (model->canSelect(s)) {
     ROS_INFO_STREAM("Selecting '" << s->name() << "' ...");
     model->select(s, /* allow_multi_selection = */ false);
@@ -60,8 +60,8 @@ bool select(rmm::Model *const model) {
   }
 }
 
-bool deselect(rmm::Model *const model) {
-  const rmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
+bool deselect(mmm::Model *const model) {
+  const mmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
   if (model->canDeselect(s)) {
     ROS_INFO_STREAM("Deselecting '" << s->name() << "' ...");
     model->deselect(s);
@@ -71,8 +71,8 @@ bool deselect(rmm::Model *const model) {
   }
 }
 
-bool descend(rmm::Model *const model) {
-  const rmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
+bool descend(mmm::Model *const model) {
+  const mmm::ItemConstPtr s(randomSibiling(model->currentLevel()));
   if (model->canDescend(s)) {
     ROS_INFO_STREAM("Descending from '" << s->name() << "' ...");
     model->descend(s, /* allow_multi_selection = */ false);
@@ -82,7 +82,7 @@ bool descend(rmm::Model *const model) {
   }
 }
 
-bool ascend(rmm::Model *const model) {
+bool ascend(mmm::Model *const model) {
   if (model->canAscend()) {
     ROS_INFO("Ascending ...");
     model->ascend();
@@ -101,10 +101,10 @@ int main(int argc, char *argv[]) {
   ros::NodeHandle nh;
 
   //
-  ros::Publisher state_pub(nh.advertise< radial_menu_msgs::State >("menu_state", 1, true));
+  ros::Publisher state_pub(nh.advertise< mmm::State >("menu_state", 1, true));
 
   // load a menu from param
-  rmm::Model model;
+  mmm::Model model;
   if (!model.setDescriptionFromParam("menu_description")) {
     return 1;
   }
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
   ROS_INFO_STREAM("State:\n" << *model.exportState());
 
   // perform random operations on the menu model
-  typedef bool (*Operation)(rmm::Model *const);
+  typedef bool (*Operation)(mmm::Model *const);
   std::array< Operation, 6 > operations = {point, unpoint, select, deselect, descend, ascend};
   ros::Rate rate(1.);
   while (ros::ok()) {

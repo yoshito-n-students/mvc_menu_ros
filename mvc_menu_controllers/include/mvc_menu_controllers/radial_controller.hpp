@@ -6,8 +6,8 @@
 #include <memory>
 
 #include <mvc_menu_controllers/radial_config.hpp>
-#include <mvc_menu_model/State.h>
-#include <mvc_menu_model/model.hpp>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/model.hpp>
 #include <sensor_msgs/Joy.h>
 
 namespace mv_menu_controllers {
@@ -18,7 +18,7 @@ typedef std::shared_ptr< const RadialController > RadialControllerConstPtr;
 
 class RadialController {
 public:
-  RadialController(const mvc_menu_model::ModelPtr &model, const BackendConfig &config)
+  RadialController(const mvc_menu_models::ModelPtr &model, const BackendConfig &config)
       : model_(model), enable_was_pressed_(false), select_was_pressed_(false),
         ascend_was_pressed_(false), config_(config) {}
 
@@ -37,7 +37,7 @@ public:
     model_->setEnabled(enable_is_pressed);
 
     // unpoint if possible
-    const mvc_menu_model::ItemConstPtr last_pointed_item(model_->pointed());
+    const mvc_menu_models::ItemConstPtr last_pointed_item(model_->pointed());
     if (model_->canUnpoint(last_pointed_item)) {
       model_->unpoint(last_pointed_item);
     }
@@ -49,7 +49,7 @@ public:
       // update the pointing item
       const double pointing_angle(pointingAngle(joy));
       if (!std::isnan(pointing_angle)) {
-        const mvc_menu_model::ItemConstPtr item_to_point(model_->sibilingByAngle(pointing_angle));
+        const mvc_menu_models::ItemConstPtr item_to_point(model_->sibilingByAngle(pointing_angle));
         if (model_->canPoint(item_to_point)) {
           model_->point(item_to_point);
         }
@@ -57,7 +57,7 @@ public:
 
       // if an item is pointed and the select button is newly pressed, select the pointed item,
       // else if auto-select is enabled and no item is pointed, select the last pointed item
-      const mvc_menu_model::ItemConstPtr pointed_item(model_->pointed());
+      const mvc_menu_models::ItemConstPtr pointed_item(model_->pointed());
       if (pointed_item && select_is_pressed && !select_was_pressed_) {
         adaptiveSelect(pointed_item);
       } else if (config_.auto_select && std::isnan(pointing_angle) && last_pointed_item) {
@@ -94,7 +94,7 @@ protected:
                : std::numeric_limits< double >::quiet_NaN();
   }
 
-  void adaptiveSelect(const mvc_menu_model::ItemConstPtr &item) {
+  void adaptiveSelect(const mvc_menu_models::ItemConstPtr &item) {
     if (model_->canSelect(item)) {
       model_->select(item, config_.allow_multi_selection);
     } else if (model_->canDeselect(item)) {
@@ -115,7 +115,7 @@ protected:
   }
 
 protected:
-  mvc_menu_model::ModelPtr model_;
+  mvc_menu_models::ModelPtr model_;
 
   // memo
   bool enable_was_pressed_, select_was_pressed_, ascend_was_pressed_;

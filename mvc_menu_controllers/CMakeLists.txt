@@ -10,7 +10,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   nodelet
   pluginlib
-  mvc_menu_model
+  mvc_menu_models
   roscpp
   sensor_msgs
 )
@@ -107,7 +107,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES mvc_menu_controller_plugins
-  CATKIN_DEPENDS nodelet pluginlib mvc_menu_model roscpp sensor_msgs
+  CATKIN_DEPENDS nodelet pluginlib mvc_menu_models roscpp sensor_msgs
 #  DEPENDS system_lib
 )
 
