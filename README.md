@@ -1,8 +1,8 @@
-# radial_menu_ros
+# mvc_menu_ros
 
 Radial menu on ROS1 for quick, accurate and intuitive selection by a joystick from 10+ items
 
-![](https://raw.githubusercontent.com/yoshito-n-students/radial_menu_ros/images/images/screenshot_v0_4_0.png)
+![](https://raw.githubusercontent.com/yoshito-n-students/mvc_menu_ros/images/images/screenshot_v0_4_0.png)
 
 ## Tested environments
 * ROS Kinetic on Ubuntu 16.04
@@ -10,19 +10,19 @@ Radial menu on ROS1 for quick, accurate and intuitive selection by a joystick fr
 * ROS Noetic on Ubuntu 20.04
 
 ## Usage
-* Subscribe both joy and menu state messages using [message_filters::TimeSynchronizer](http://wiki.ros.org/message_filters#Time_Synchronizer), watch which menu items are selected and process the joy messages when the menu is disabled (i.e. the menu does not own the joy messages). See an example node graph below or [example_teleop_node.cpp](radial_menu_example/src/example_teleop_node.cpp). The teleop_node in the graph can be replaced to your node.
+* Subscribe both joy and menu state messages using [message_filters::TimeSynchronizer](http://wiki.ros.org/message_filters#Time_Synchronizer), watch which menu items are selected and process the joy messages when the menu is disabled (i.e. the menu does not own the joy messages). See an example node graph below or [example_teleop_node.cpp](mvc_menu_example/src/example_teleop_node.cpp). The teleop_node in the graph can be replaced to your node.
 
-![](https://raw.githubusercontent.com/yoshito-n-students/radial_menu_ros/images/images/example_integration_v0_2_1.png)
+![](https://raw.githubusercontent.com/yoshito-n-students/mvc_menu_ros/images/images/example_integration_v0_2_1.png)
 
-## Pkg: radial_menu_backend
-### Nodelet: Backend
+## Pkg: mvc_menu_controllers
+### Nodelet: RadialController
 * Updates radial menu state based on joystick input
 
 #### <u>Subscribed topics</u>
 **joy** (sensor_msgs/Joy)
 
 #### <u>Published topics</u>
-**menu_state** ([radial_menu_msgs/State](radial_menu_msgs/msg/State.msg))
+**menu_state** ([mvc_menu_models/State](mvc_menu_models/msg/State.msg))
 * The stamp in a message is copied from the source joy message
 
 #### <u>Parameters</u>
@@ -52,7 +52,7 @@ Radial menu on ROS1 for quick, accurate and intuitive selection by a joystick fr
 <!--   * 'alttxt': displays an alternative text              -->
 <!--   * 'image': displays an image                          -->
 <item name="Reboot" display="alttxt" alttxt="&#xF021;">
-    <item name="Base" display="image" imgurl="package://radial_menu_resources/images/base.bmp">
+    <item name="Base" display="image" imgurl="package://mvc_menu_resources/images/base.bmp">
         <item name="Wheels" display="image" imgurl="file://Photos/wheels.png" />
         <item name="Cameras">
             <item name="Front" />
@@ -110,7 +110,7 @@ Radial menu on ROS1 for quick, accurate and intuitive selection by a joystick fr
 **~pointing_axis_threshold** (double, default: 0.5)
 * Threshold value of axis input to enable pointing
 
-## Pkg: radial_menu_rviz
+## Pkg: mvc_menu_rviz
 ### Rviz plugin: RadialMenu
 * Visualizes subscribed menu states as a radial menu
 * Shows the menu when the menu is being enabled
@@ -119,15 +119,13 @@ Radial menu on ROS1 for quick, accurate and intuitive selection by a joystick fr
 * Visualizes subscribed menu states as a single-lined menu 
 * Always shows the menu
 
-## Pkg: radial_menu_model
-* Contains an implementatin of menu tree model, which is commonly used in the backend and rviz packages
+## Pkg: mvc_menu_models
+* Contains an implementatin of menu tree model, which is commonly used in the controllers and rviz packages
+* Defines [State](mvc_menu_msgs/msg/State.msg) message type
 
-## Pkg: radial_menu_msgs
-* Defines [State](radial_menu_msgs/msg/State.msg) message type
+## Pkg: mvc_menu
+* A meta-package depending mvc_menu_controllers, mvc_menu_models and mvc_menu_rviz
 
-## Pkg: radial_menu
-* A meta-package depending radial_menu_backend, radial_menu_model, radial_menu_msgs and radial_menu_rviz
-
-## Pkg: radial_menu_example
-* Provides a [full example](radial_menu_example/launch/example_full.launch) which requires a joystick and a [Rviz frontend example](radial_menu_example/launch/example_rviz.launch) which does not
+## Pkg: mvc_menu_example
+* Provides a [full example](mvc_menu_example/launch/example_full.launch) which requires a joystick and a [Rviz frontend example](mvc_menu_example/launch/example_rviz.launch) which does not
 * Examples use the font 'FontAwesome' to display emojis. Install it by `sudo apt install fonts-font-awesome` 
