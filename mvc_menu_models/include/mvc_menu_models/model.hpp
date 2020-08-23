@@ -1,5 +1,5 @@
-#ifndef RADIAL_MENU_MODEL_MODEL_HPP
-#define RADIAL_MENU_MODEL_MODEL_HPP
+#ifndef MVC_MENU_MODELS_MODEL_HPP
+#define MVC_MENU_MODELS_MODEL_HPP
 
 #include <algorithm>
 #include <cstdint>
@@ -7,14 +7,14 @@
 #include <string>
 #include <vector>
 
-#include <radial_menu_model/item.hpp>
-#include <radial_menu_msgs/State.h>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/item.hpp>
 #include <ros/console.h>
 #include <ros/exception.h>
 #include <ros/param.h>
 #include <ros/time.h>
 
-namespace radial_menu_model {
+namespace mvc_menu_models {
 
 class Model;
 typedef std::shared_ptr< Model > ModelPtr;
@@ -143,14 +143,14 @@ public:
   // State
   // *****
 
-  radial_menu_msgs::StatePtr exportState(const ros::Time stamp = ros::Time::now()) const {
-    radial_menu_msgs::StatePtr state(new radial_menu_msgs::State(state_));
+  StatePtr exportState(const ros::Time stamp = ros::Time::now()) const {
+    StatePtr state(new State(state_));
     state->header.stamp = stamp;
     return state;
   }
 
   // set new state. also update the current level
-  bool setState(const radial_menu_msgs::State &new_state) {
+  bool setState(const State &new_state) {
     state_ = new_state;
 
     // update the current level by moving to the deepest level of selected items or its children
@@ -173,8 +173,8 @@ public:
 
   bool resetState() { return setState(defaultState()); }
 
-  static radial_menu_msgs::State defaultState() {
-    radial_menu_msgs::State state;
+  static State defaultState() {
+    State state;
     state.is_enabled = false;
     state.pointed_id = -1;
     return state;
@@ -368,8 +368,8 @@ protected:
 protected:
   std::vector< ItemConstPtr > items_;
   ItemConstPtr current_level_;
-  radial_menu_msgs::State state_;
+  State state_;
 };
-} // namespace radial_menu_model
+} // namespace mvc_menu_models
 
 #endif

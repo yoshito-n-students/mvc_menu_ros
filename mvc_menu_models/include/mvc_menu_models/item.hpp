@@ -1,15 +1,15 @@
-#ifndef RADIAL_MENU_MODEL_ITEM_HPP
-#define RADIAL_MENU_MODEL_ITEM_HPP
+#ifndef MVC_MENU_MODELS_ITEM_HPP
+#define MVC_MENU_MODELS_ITEM_HPP
 
 #include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include <radial_menu_model/xml_element.hpp>
+#include <mvc_menu_models/xml_element.hpp>
 #include <ros/console.h>
 
-namespace radial_menu_model {
+namespace mvc_menu_models {
 
 // pointer types
 
@@ -230,6 +230,6 @@ protected:
   ItemWeakConstPtr parent_;
   std::vector< ItemConstPtr > children_;
 };
-} // namespace radial_menu_model
+} // namespace mvc_menu_models
 
 #endif

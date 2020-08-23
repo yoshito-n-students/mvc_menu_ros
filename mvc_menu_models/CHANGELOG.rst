@@ -1,6 +1,11 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package radial_menu_model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package mvc_menu_models
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+0.5.0 (2020-XX-XX)
+------------------
+* Integrate radial_menu_msgs into this pkg
+* Rename radial_menu_model to mvc_menu_models
 
 0.4.0 (2020-08-16)
 ------------------

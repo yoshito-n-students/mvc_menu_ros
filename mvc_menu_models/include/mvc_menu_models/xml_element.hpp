@@ -1,5 +1,5 @@
-#ifndef RADIAL_MENU_MODEL_XML_ELEMENT_HPP
-#define RADIAL_MENU_MODEL_XML_ELEMENT_HPP
+#ifndef MVC_MENU_MODELS_XML_ELEMENT_HPP
+#define MVC_MENU_MODELS_XML_ELEMENT_HPP
 
 #include <memory>
 #include <sstream>
@@ -13,7 +13,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-namespace radial_menu_model {
+namespace mvc_menu_models {
 
 class XmlElement;
 typedef std::shared_ptr< XmlElement > XmlElementPtr;
@@ -96,6 +96,6 @@ protected:
   const std::shared_ptr< const boost::property_tree::ptree > xml_;
   const boost::property_tree::ptree::value_type *const elm_;
 };
-} // namespace radial_menu_model
+} // namespace mvc_menu_models
 
 #endif
