@@ -1,6 +1,10 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package radial_menu_example
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package mvc_menu_example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+0.5.0 (2020-XX-XX)
+------------------
+* Rename radial_menu_example to mvc_menu_example
 
 0.4.0 (2020-08-16)
 ------------------

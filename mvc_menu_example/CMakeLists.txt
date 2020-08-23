@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(radial_menu_example)
+project(mvc_menu_example)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -10,10 +10,9 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   joy
   message_filters
-  radial_menu_backend
-  radial_menu_model
-  radial_menu_msgs
-  radial_menu_rviz
+  mvc_menu_controllers
+  mvc_menu_model
+  mvc_menu_rviz
   roscpp
   roslaunch
   rviz
@@ -111,14 +110,13 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES radial_menu_example
+#  LIBRARIES mvc_menu_example
   CATKIN_DEPENDS 
   joy 
   message_filters 
-  radial_menu_backend 
-  radial_menu_model 
-  radial_menu_msgs 
-  radial_menu_rviz 
+  mvc_menu_controllers 
+  mvc_menu_model 
+  mvc_menu_rviz 
   roscpp 
   roslaunch 
   rviz 
@@ -139,7 +137,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/radial_menu_example.cpp
+#   src/${PROJECT_NAME}/mvc_menu_example.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -236,7 +234,7 @@ install(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_radial_menu_example.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_mvc_menu_example.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

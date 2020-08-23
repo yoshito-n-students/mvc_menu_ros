@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>radial_menu_example</name>
+  <name>mvc_menu_example</name>
   <version>0.4.0</version>
-  <description>The radial_menu_example package</description>
+  <description>The mvc_menu_example package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/radial_menu_example</url> -->
+  <!-- <url type="website">http://wiki.ros.org/mvc_menu_example</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -51,30 +51,27 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>joy</build_depend>
   <build_depend>message_filters</build_depend>
-  <build_depend>radial_menu_backend</build_depend>
-  <build_depend>radial_menu_model</build_depend>
-  <build_depend>radial_menu_msgs</build_depend>
-  <build_depend>radial_menu_rviz</build_depend>
+  <build_depend>mvc_menu_controllers</build_depend>
+  <build_depend>mvc_menu_model</build_depend>
+  <build_depend>mvc_menu_rviz</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>roslaunch</build_depend>
   <build_depend>rviz</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_export_depend>joy</build_export_depend>
   <build_export_depend>message_filters</build_export_depend>
-  <build_export_depend>radial_menu_backend</build_export_depend>
-  <build_export_depend>radial_menu_model</build_export_depend>
-  <build_export_depend>radial_menu_msgs</build_export_depend>
-  <build_export_depend>radial_menu_rviz</build_export_depend>
+  <build_export_depend>mvc_menu_controllers</build_export_depend>
+  <build_export_depend>mvc_menu_model</build_export_depend>
+  <build_export_depend>mvc_menu_rviz</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>roslaunch</build_export_depend>
   <build_export_depend>rviz</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>message_filters</exec_depend>
-  <exec_depend>radial_menu_backend</exec_depend>
-  <exec_depend>radial_menu_model</exec_depend>
-  <exec_depend>radial_menu_msgs</exec_depend>
-  <exec_depend>radial_menu_rviz</exec_depend>
+  <exec_depend>mvc_menu_controllers</exec_depend>
+  <exec_depend>mvc_menu_model</exec_depend>
+  <exec_depend>mvc_menu_rviz</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>roslaunch</exec_depend>
   <exec_depend>rviz</exec_depend>
