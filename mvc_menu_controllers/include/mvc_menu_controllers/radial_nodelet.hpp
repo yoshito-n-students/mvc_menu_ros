@@ -1,8 +1,8 @@
 #ifndef MVC_MENU_CONTROLLERS_RADIAL_NODELET_HPP
 #define MVC_MENU_CONTROLLERS_RADIAL_NODELET_HPP
 
-#include <mvc_menu_controllers/backend_config.hpp>
-#include <mvc_menu_controllers/backend_controller.hpp>
+#include <mvc_menu_controllers/radial_config.hpp>
+#include <mvc_menu_controllers/radial_controller.hpp>
 #include <mvc_menu_models/State.h>
 #include <mvc_menu_models/model.hpp>
 #include <nodelet/nodelet.h>

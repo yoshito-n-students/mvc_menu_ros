@@ -10,7 +10,7 @@
 #include <mvc_menu_models/model.hpp>
 #include <sensor_msgs/Joy.h>
 
-namespace mv_menu_controllers {
+namespace mvc_menu_controllers {
 
 class RadialController;
 typedef std::shared_ptr< RadialController > RadialControllerPtr;
@@ -18,13 +18,13 @@ typedef std::shared_ptr< const RadialController > RadialControllerConstPtr;
 
 class RadialController {
 public:
-  RadialController(const mvc_menu_models::ModelPtr &model, const BackendConfig &config)
+  RadialController(const mvc_menu_models::ModelPtr &model, const RadialConfig &config)
       : model_(model), enable_was_pressed_(false), select_was_pressed_(false),
         ascend_was_pressed_(false), config_(config) {}
 
   virtual ~RadialController() {}
 
-  radial_menu_msgs::StatePtr update(const sensor_msgs::Joy &joy) {
+  mvc_menu_models::StatePtr update(const sensor_msgs::Joy &joy) {
     // reset the menu based on enable/disable state if required
     const bool enable_is_pressed(buttonValue(joy, config_.enable_button) > 0);
     if ((config_.reset_on_enabling && !enable_was_pressed_ && enable_is_pressed) ||
@@ -120,8 +120,8 @@ protected:
   // memo
   bool enable_was_pressed_, select_was_pressed_, ascend_was_pressed_;
 
-  const BackendConfig config_;
+  const RadialConfig config_;
 };
-} // namespace mv_menu_controllers
+} // namespace mvc_menu_controllers
 
 #endif
