@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(radial_menu_rviz)
+project(mvc_menu_rviz)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -8,8 +8,7 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  radial_menu_model
-  radial_menu_msgs
+  mvc_menu_models
   roscpp
   rviz
 )
@@ -108,8 +107,8 @@ add_definitions(-DQT_NO_KEYWORDS)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES radial_menu_rviz_plugins
-  CATKIN_DEPENDS radial_menu_model radial_menu_msgs roscpp rviz
+  LIBRARIES mvc_menu_rviz_plugins
+  CATKIN_DEPENDS mvc_menu_models roscpp rviz
 #  DEPENDS
 )
 
@@ -128,16 +127,16 @@ include_directories(
 #
 qt5_wrap_cpp(
   MOC_FILES 
-  include/radial_menu_rviz/radial_display.hpp
-  include/radial_menu_rviz/radial_property_control.hpp
-  include/radial_menu_rviz/horizontal_display.hpp
-  include/radial_menu_rviz/horizontal_property_control.hpp
+  include/mvc_menu_rviz/radial_display.hpp
+  include/mvc_menu_rviz/radial_property_control.hpp
+  include/mvc_menu_rviz/horizontal_display.hpp
+  include/mvc_menu_rviz/horizontal_property_control.hpp
 )
 
 ## Declare a C++ library
 add_library(
-  radial_menu_rviz_plugins
-  src/radial_menu_rviz_plugins.cpp
+  mvc_menu_rviz_plugins
+  src/mvc_menu_rviz_plugins.cpp
   ${MOC_FILES}
 )
 
@@ -145,7 +144,7 @@ add_library(
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 add_dependencies(
-  radial_menu_rviz_plugins 
+  mvc_menu_rviz_plugins 
   ${${PROJECT_NAME}_EXPORTED_TARGETS} 
   ${catkin_EXPORTED_TARGETS}
 )
@@ -153,7 +152,7 @@ add_dependencies(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/radial_menu_rviz_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/mvc_menu_rviz_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -167,7 +166,7 @@ add_dependencies(
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
-  radial_menu_rviz_plugins
+  mvc_menu_rviz_plugins
   ${catkin_LIBRARIES}
   ${QT_LIBRARIES}
 )
@@ -195,7 +194,7 @@ target_link_libraries(
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
 install(
-  TARGETS radial_menu_rviz_plugins
+  TARGETS mvc_menu_rviz_plugins
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
@@ -220,7 +219,7 @@ install(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_radial_menu_rviz.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_mvc_menu_rviz.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

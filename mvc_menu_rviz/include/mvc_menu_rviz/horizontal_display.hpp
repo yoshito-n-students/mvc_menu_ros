@@ -1,14 +1,14 @@
-#ifndef RADIAL_MENU_RVIZ_HORIZONTAL_DISPLAY_HPP
-#define RADIAL_MENU_RVIZ_HORIZONTAL_DISPLAY_HPP
+#ifndef MVC_MENU_RVIZ_HORIZONTAL_DISPLAY_HPP
+#define MVC_MENU_RVIZ_HORIZONTAL_DISPLAY_HPP
 
-#include <radial_menu_rviz/display_base.hpp>
-#include <radial_menu_rviz/horizontal_image_drawer.hpp>
-#include <radial_menu_rviz/horizontal_property_control.hpp>
-#include <radial_menu_rviz/properties.hpp>
+#include <mvc_menu_rviz/display_base.hpp>
+#include <mvc_menu_rviz/horizontal_image_drawer.hpp>
+#include <mvc_menu_rviz/horizontal_property_control.hpp>
+#include <mvc_menu_rviz/properties.hpp>
 
 #include <QObject>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 class HorizontalDisplay : public DisplayBase< HorizontalDrawingProperty, HorizontalPropertyControl,
                                               HorizontalImageDrawer > {
@@ -51,6 +51,6 @@ protected Q_SLOTS:
 
   void updatePosition(const PositionProperty &prop) { Base::updatePosition(prop); }
 };
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif

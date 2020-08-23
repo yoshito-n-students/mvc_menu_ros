@@ -1,0 +1,19 @@
+<library path="lib/libmvc_menu_rviz_plugins">
+
+    <class name="mvc_menu_rviz/RadialMenu"
+           type="mvc_menu_rviz::RadialDisplay"
+           base_class_type="rviz::Display">
+        <description>
+            visualize mvc_menu_models/State
+        </description>
+    </class>
+
+    <class name="mvc_menu_rviz/HorizontalMenu"
+           type="mvc_menu_rviz::HorizontalDisplay"
+           base_class_type="rviz::Display">
+        <description>
+            visualize mvc_menu_models/State using horizontal menu
+        </description>
+    </class>
+
+</library>

@@ -1,12 +1,12 @@
-#ifndef RADIAL_MENU_RVIZ_PROPERTIES_HPP
-#define RADIAL_MENU_RVIZ_PROPERTIES_HPP
+#ifndef MVC_MENU_RVIZ_PROPERTIES_HPP
+#define MVC_MENU_RVIZ_PROPERTIES_HPP
 
 #include <QFont>
 #include <QPoint>
 #include <QRgb>
 #include <QString>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 struct DescriptionProperty {
   QString param_name;
@@ -51,6 +51,6 @@ struct PositionProperty {
   QPoint origin;
 };
 
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif

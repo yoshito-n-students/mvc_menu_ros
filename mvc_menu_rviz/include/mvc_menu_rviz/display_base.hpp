@@ -1,18 +1,18 @@
-#ifndef RADIAL_MENU_RVIZ_DISPLAY_BASE_HPP
-#define RADIAL_MENU_RVIZ_DISPLAY_BASE_HPP
+#ifndef MVC_MENU_RVIZ_DISPLAY_BASE_HPP
+#define MVC_MENU_RVIZ_DISPLAY_BASE_HPP
 
 #include <memory>
 
-#include <radial_menu_model/model.hpp>
-#include <radial_menu_msgs/State.h>
-#include <radial_menu_rviz/image_overlay.hpp>
-#include <radial_menu_rviz/properties.hpp>
+#include <mvc_menu_models/State.h>
+#include <mvc_menu_models/model.hpp>
+#include <mvc_menu_rviz/image_overlay.hpp>
+#include <mvc_menu_rviz/properties.hpp>
 #include <ros/console.h>
 #include <ros/exception.h>
 #include <ros/subscriber.h>
 #include <rviz/display.h>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 // base implementation of display classes except Qt's signals and slots
 // because template classes cannot have any slots and signals by Qt's limitation
@@ -28,7 +28,7 @@ protected:
   virtual void onInitialize() {
     // allocate objects
     prop_ctl_.reset(new PropertyControl(this));
-    model_.reset(new radial_menu_model::Model());
+    model_.reset(new mvc_menu_models::Model());
     drawer_.reset(new ImageDrawer(model_, prop_ctl_->drawingProperty()));
     overlay_.reset(new ImageOverlay());
 
@@ -87,7 +87,7 @@ protected:
   }
 
   // update menu image with the given menu state
-  void updateImage(const radial_menu_msgs::StateConstPtr &new_state) {
+  void updateImage(const mvc_menu_models::StateConstPtr &new_state) {
     if (state_->is_enabled != new_state->is_enabled ||
         state_->pointed_id != new_state->pointed_id ||
         state_->selected_ids != new_state->selected_ids) {
@@ -112,15 +112,15 @@ protected:
   // property control via Rviz
   std::unique_ptr< PropertyControl > prop_ctl_;
   // menu tree model
-  radial_menu_model::ModelPtr model_;
+  mvc_menu_models::ModelPtr model_;
   // menu state subscriber
   ros::Subscriber state_sub_;
-  radial_menu_msgs::StateConstPtr state_;
+  mvc_menu_models::StateConstPtr state_;
   // state drawer
   std::unique_ptr< ImageDrawer > drawer_;
   // overlay on Rviz
   std::unique_ptr< ImageOverlay > overlay_;
 };
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif

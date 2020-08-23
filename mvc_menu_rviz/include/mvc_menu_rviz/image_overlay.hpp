@@ -1,5 +1,5 @@
-#ifndef RADIAL_MENU_RVIZ_IMAGE_OVERLAY_HPP
-#define RADIAL_MENU_RVIZ_IMAGE_OVERLAY_HPP
+#ifndef MVC_MENU_RVIZ_IMAGE_OVERLAY_HPP
+#define MVC_MENU_RVIZ_IMAGE_OVERLAY_HPP
 
 #include <string>
 
@@ -22,7 +22,7 @@
 
 #include <boost/lexical_cast.hpp>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 class ImageOverlay {
 public:
@@ -161,6 +161,6 @@ private:
   QImage image_;
 };
 
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif

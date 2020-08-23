@@ -1,13 +1,14 @@
-#ifndef RADIAL_MENU_RVIZ_HORIZONTAL_IMAGE_DRAWER_HPP
-#define RADIAL_MENU_RVIZ_HORIZONTAL_IMAGE_DRAWER_HPP
+#ifndef MVC_MENU_RVIZ_HORIZONTAL_IMAGE_DRAWER_HPP
+#define MVC_MENU_RVIZ_HORIZONTAL_IMAGE_DRAWER_HPP
 
 #include <algorithm>
 #include <cstdint>
 #include <vector>
 
-#include <radial_menu_model/model.hpp>
-#include <radial_menu_rviz/image_overlay.hpp>
-#include <radial_menu_rviz/properties.hpp>
+#include <mvc_menu_models/item.hpp>
+#include <mvc_menu_models/model.hpp>
+#include <mvc_menu_rviz/image_overlay.hpp>
+#include <mvc_menu_rviz/properties.hpp>
 #include <ros/console.h>
 #include <rviz/load_resource.h>
 
@@ -24,11 +25,11 @@
 #include <QSize>
 #include <QString>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 class HorizontalImageDrawer {
 public:
-  HorizontalImageDrawer(const radial_menu_model::ModelConstPtr &model,
+  HorizontalImageDrawer(const mvc_menu_models::ModelConstPtr &model,
                         const HorizontalDrawingProperty &prop) {
     setModel(model);
     setProperty(prop);
@@ -36,7 +37,7 @@ public:
 
   virtual ~HorizontalImageDrawer() {}
 
-  void setModel(const radial_menu_model::ModelConstPtr &model) { model_ = model; }
+  void setModel(const mvc_menu_models::ModelConstPtr &model) { model_ = model; }
 
   void setProperty(const HorizontalDrawingProperty &prop) { prop_ = prop; }
 
@@ -45,7 +46,7 @@ public:
     QSize image_size;
     std::vector< ElementType > element_types;
     std::vector< QRect > bg_rects, fg_rects;
-    std::vector< radial_menu_model::ItemConstPtr > items;
+    std::vector< mvc_menu_models::ItemConstPtr > items;
     imageLayout(&image_size, &element_types, &bg_rects, &fg_rects, &items);
 
     // draw elements on the image
@@ -86,7 +87,7 @@ protected:
   // calc image size and element layouts
   void imageLayout(QSize *const image_size, std::vector< ElementType > *const element_types,
                    std::vector< QRect > *const bg_rects, std::vector< QRect > *const fg_rects,
-                   std::vector< radial_menu_model::ItemConstPtr > *const items) const {
+                   std::vector< mvc_menu_models::ItemConstPtr > *const items) const {
     element_types->clear();
     bg_rects->clear();
     fg_rects->clear();
@@ -98,7 +99,7 @@ protected:
 
     // evaluate the title element
     {
-      const radial_menu_model::ItemConstPtr item(model_->root());
+      const mvc_menu_models::ItemConstPtr item(model_->root());
       QRect bg_rect, fg_rect;
       elementLayout(item, &bg_rect, &fg_rect);
       if (bg_rect.isValid() && fg_rect.isValid()) {
@@ -110,7 +111,7 @@ protected:
     }
 
     // evaluate the selected elements
-    for (const radial_menu_model::ItemConstPtr &item : model_->selected()) {
+    for (const mvc_menu_models::ItemConstPtr &item : model_->selected()) {
       QRect bg_rect, fg_rect;
       elementLayout(item, &bg_rect, &fg_rect);
       if (bg_rect.isValid() && fg_rect.isValid()) {
@@ -123,7 +124,7 @@ protected:
 
     // evaluate the pointed element
     {
-      const radial_menu_model::ItemConstPtr item(model_->pointed());
+      const mvc_menu_models::ItemConstPtr item(model_->pointed());
       if (item) {
         QRect bg_rect, fg_rect;
         elementLayout(item, &bg_rect, &fg_rect);
@@ -172,19 +173,19 @@ protected:
   // calc bounding rectangles of element's background and foreground.
   // the top left corner of the background rectangle will be aligined to (0, 0).
   // if the text is not drawable, returns null rectangles.
-  void elementLayout(const radial_menu_model::ItemConstPtr &item, QRect *const bg_rect,
+  void elementLayout(const mvc_menu_models::ItemConstPtr &item, QRect *const bg_rect,
                      QRect *const fg_rect) const {
     // set foreground rect
     switch (item->displayType()) {
-    case radial_menu_model::Item::Name:
+    case mvc_menu_models::Item::Name:
       fg_rect->setHeight(prop_.fg_height);
       fg_rect->setWidth(textWidth(prop_.font, QString::fromStdString(item->name())));
       break;
-    case radial_menu_model::Item::AltTxt:
+    case mvc_menu_models::Item::AltTxt:
       fg_rect->setHeight(prop_.fg_height);
       fg_rect->setWidth(textWidth(prop_.font, QString::fromStdString(item->altTxt())));
       break;
-    case radial_menu_model::Item::Image:
+    case mvc_menu_models::Item::Image:
       fg_rect->setHeight(prop_.fg_height);
       fg_rect->setWidth(prop_.fg_height);
       break;
@@ -223,16 +224,16 @@ protected:
   }
 
   void drawForeground(QPainter *const painter, const QRgb &rgb, const QRect &rect,
-                      const radial_menu_model::ItemConstPtr &item) const {
+                      const mvc_menu_models::ItemConstPtr &item) const {
     painter->setPen(makeColor(rgb, prop_.fg_alpha));
     switch (item->displayType()) {
-    case radial_menu_model::Item::Name:
+    case mvc_menu_models::Item::Name:
       painter->drawText(rect, Qt::AlignCenter, QString::fromStdString(item->name()));
       break;
-    case radial_menu_model::Item::AltTxt:
+    case mvc_menu_models::Item::AltTxt:
       painter->drawText(rect, Qt::AlignCenter, QString::fromStdString(item->altTxt()));
       break;
-    case radial_menu_model::Item::Image:
+    case mvc_menu_models::Item::Image:
       painter->drawPixmap(
           rect, rviz::loadPixmap(QString::fromStdString(item->imgURL()), /* fill_cache = */ true));
       break;
@@ -252,9 +253,9 @@ protected:
   }
 
 protected:
-  radial_menu_model::ModelConstPtr model_;
+  mvc_menu_models::ModelConstPtr model_;
   HorizontalDrawingProperty prop_;
 };
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif

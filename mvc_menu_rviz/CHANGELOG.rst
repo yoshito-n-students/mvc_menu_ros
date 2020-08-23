@@ -1,6 +1,10 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package radial_menu_rviz
+Changelog for package mvc_menu_rviz
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+0.5.0 (2020-XX-XX)
+------------------
+* Rename radial_menu_rviz to mvc_menu_rviz
 
 0.4.0 (2020-08-16)
 ------------------

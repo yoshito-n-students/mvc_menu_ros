@@ -1,13 +1,14 @@
-#ifndef RADIAL_MENU_RVIZ_RADIAL_IMAGE_DRAWER_HPP
-#define RADIAL_MENU_RVIZ_RADIAL_IMAGE_DRAWER_HPP
+#ifndef MVC_MENU_RVIZ_RADIAL_IMAGE_DRAWER_HPP
+#define MVC_MENU_RVIZ_RADIAL_IMAGE_DRAWER_HPP
 
 #include <algorithm>
 #include <cmath>
 #include <vector>
 
-#include <radial_menu_model/model.hpp>
-#include <radial_menu_rviz/image_overlay.hpp>
-#include <radial_menu_rviz/properties.hpp>
+#include <mvc_menu_models/item.hpp>
+#include <mvc_menu_models/model.hpp>
+#include <mvc_menu_rviz/image_overlay.hpp>
+#include <mvc_menu_rviz/properties.hpp>
 #include <ros/console.h>
 #include <rviz/load_resource.h>
 
@@ -23,11 +24,11 @@
 #include <QSize>
 #include <QString>
 
-namespace radial_menu_rviz {
+namespace mvc_menu_rviz {
 
 class RadialImageDrawer {
 public:
-  RadialImageDrawer(const radial_menu_model::ModelConstPtr &model,
+  RadialImageDrawer(const mvc_menu_models::ModelConstPtr &model,
                     const RadialDrawingProperty &prop) {
     setModel(model);
     setProperty(prop);
@@ -35,7 +36,7 @@ public:
 
   virtual ~RadialImageDrawer() {}
 
-  void setModel(const radial_menu_model::ModelConstPtr &model) { model_ = model; }
+  void setModel(const mvc_menu_models::ModelConstPtr &model) { model_ = model; }
 
   void setProperty(const RadialDrawingProperty &prop) { prop_ = prop; }
 
@@ -67,7 +68,7 @@ protected:
     alpha_painter.setRenderHint(QPainter::Antialiasing);
 
     // draw item areas from outer to inner, and then the title area
-    for (radial_menu_model::ItemConstPtr level = model_->currentLevel(); level != model_->root();
+    for (mvc_menu_models::ItemConstPtr level = model_->currentLevel(); level != model_->root();
          level = level->parentLevel()) {
       drawItemBackgrounds(&rgb_painter, &alpha_painter, level);
     }
@@ -80,7 +81,7 @@ protected:
   }
 
   void drawItemBackgrounds(QPainter *const rgb_painter, QPainter *const alpha_painter,
-                           const radial_menu_model::ItemConstPtr &level) const {
+                           const mvc_menu_models::ItemConstPtr &level) const {
     // common properties
     const QPoint image_center(deviceCenter(*rgb_painter->device()));
     const int n_sibilings(level->numSibilings()), depth(level->depth());
@@ -98,7 +99,7 @@ protected:
       const int span_angle(pieSpanAngle(n_sibilings));
       // draw pies
       for (int sid = 0; sid < n_sibilings; ++sid) {
-        const radial_menu_model::ItemConstPtr item(level->sibiling(sid));
+        const mvc_menu_models::ItemConstPtr item(level->sibiling(sid));
         if (!item) {
           continue;
         }
@@ -178,7 +179,7 @@ protected:
     painter.setRenderHint(QPainter::TextAntialiasing);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    for (radial_menu_model::ItemConstPtr level = model_->currentLevel(); level != model_->root();
+    for (mvc_menu_models::ItemConstPtr level = model_->currentLevel(); level != model_->root();
          level = level->parentLevel()) {
       drawItemForegrounds(&painter, level);
     }
@@ -186,13 +187,13 @@ protected:
   }
 
   void drawItemForegrounds(QPainter *const painter,
-                           const radial_menu_model::ItemConstPtr &level) const {
+                           const mvc_menu_models::ItemConstPtr &level) const {
     const QPoint image_center(deviceCenter(*painter->device()));
     const int n_sibilings(level->numSibilings()), depth(level->depth());
 
     // draw item texts
     for (int sid = 0; sid < n_sibilings; ++sid) {
-      const radial_menu_model::ItemConstPtr item(level->sibiling(sid));
+      const mvc_menu_models::ItemConstPtr item(level->sibiling(sid));
       if (!item) {
         continue;
       }
@@ -229,18 +230,18 @@ protected:
   }
 
   void drawItemForeground(QPainter *const painter, const QRgb &rgb, const QRect &rect,
-                          const radial_menu_model::ItemConstPtr &item) const {
+                          const mvc_menu_models::ItemConstPtr &item) const {
     painter->setPen(makeColor(rgb, prop_.fg_alpha));
     switch (item->displayType()) {
-    case radial_menu_model::Item::Name:
+    case mvc_menu_models::Item::Name:
       painter->drawText(rect, Qt::AlignCenter | Qt::TextWordWrap,
                         QString::fromStdString(item->name()));
       return;
-    case radial_menu_model::Item::AltTxt:
+    case mvc_menu_models::Item::AltTxt:
       painter->drawText(rect, Qt::AlignCenter | Qt::TextWordWrap,
                         QString::fromStdString(item->altTxt()));
       return;
-    case radial_menu_model::Item::Image:
+    case mvc_menu_models::Item::Image:
       painter->drawPixmap(
           rect, rviz::loadPixmap(QString::fromStdString(item->imgURL()), /* fill_cache = */ true));
       return;
@@ -315,9 +316,9 @@ protected:
   }
 
 protected:
-  radial_menu_model::ModelConstPtr model_;
+  mvc_menu_models::ModelConstPtr model_;
   RadialDrawingProperty prop_;
 };
-} // namespace radial_menu_rviz
+} // namespace mvc_menu_rviz
 
 #endif
