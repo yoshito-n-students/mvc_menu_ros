@@ -1,4 +1,4 @@
-#include <mvc_menu_controllers/radial_nodelet.hpp>
+#include <mvc_menu_controllers/nodelets.hpp>
 #include <nodelet/nodelet.h>
 #include <pluginlib/class_list_macros.h>
 

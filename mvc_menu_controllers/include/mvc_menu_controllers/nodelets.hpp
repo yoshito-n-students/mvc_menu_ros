@@ -1,5 +1,7 @@
-#ifndef MVC_MENU_CONTROLLERS_RADIAL_NODELET_HPP
-#define MVC_MENU_CONTROLLERS_RADIAL_NODELET_HPP
+#ifndef MVC_MENU_CONTROLLERS_NODELETS_HPP
+#define MVC_MENU_CONTROLLERS_NODELETS_HPP
+
+#include <memory>
 
 #include <mvc_menu_controllers/radial_config.hpp>
 #include <mvc_menu_controllers/radial_controller.hpp>
@@ -14,11 +16,11 @@
 
 namespace mvc_menu_controllers {
 
-class RadialNodelet : public nodelet::Nodelet {
+template < class Controller, class Config > class Nodelet : public nodelet::Nodelet {
 public:
-  RadialNodelet() {}
+  Nodelet() {}
 
-  virtual ~RadialNodelet() {}
+  virtual ~Nodelet() {}
 
 protected:
   virtual void onInit() {
@@ -31,11 +33,11 @@ protected:
     }
     NODELET_INFO_STREAM("Menu:\n" << model_->toString());
 
-    controller_.reset(new RadialController(model_, RadialConfig::fromParamNs(pnh.getNamespace())));
+    controller_.reset(new Controller(model_, Config::fromParamNs(pnh.getNamespace())));
 
     state_pub_ = nh.advertise< mvc_menu_models::State >("menu_state", 1, true);
     state_pub_.publish(model_->exportState());
-    joy_sub_ = nh.subscribe("joy", 1, &RadialNodelet::onJoyRecieved, this);
+    joy_sub_ = nh.subscribe("joy", 1, &Nodelet::onJoyRecieved, this);
   }
 
   void onJoyRecieved(const sensor_msgs::JoyConstPtr &joy) {
@@ -46,11 +48,13 @@ protected:
 
 protected:
   mvc_menu_models::ModelPtr model_;
-  RadialControllerPtr controller_;
+  std::shared_ptr< Controller > controller_;
 
   ros::Subscriber joy_sub_;
   ros::Publisher state_pub_;
 };
+
+typedef Nodelet< RadialController, RadialConfig > RadialNodelet;
 } // namespace mvc_menu_controllers
 
 #endif
