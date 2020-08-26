@@ -1,6 +1,7 @@
 #ifndef MVC_MENU_MODELS_ITEM_HPP
 #define MVC_MENU_MODELS_ITEM_HPP
 
+#include <cmath>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -66,6 +67,10 @@ public:
 
   // sibilings
 
+  int row() const { return row_; }
+
+  int col() const { return col_; }
+
   int numSibilings() const {
     const ItemConstPtr p(parent());
     return p ? p->children_.size() : 1;
@@ -81,6 +86,17 @@ public:
     if (p && sid >= 0 && sid < p->children_.size()) {
       return p->children_[sid];
     } else if (!p && sid == 0) {
+      return shared_from_this();
+    } else {
+      return ItemConstPtr();
+    }
+  }
+
+  ItemConstPtr sibiling(const int row, const int col) const {
+    const ItemConstPtr p(parent());
+    if (p && row >= 0 && row < p->rows_ && col >= 0 && col < p->cols_) {
+      return p->children_[row * p->cols_ + col];
+    } else if (!p && row == row_ && col == col_) {
       return shared_from_this();
     } else {
       return ItemConstPtr();
@@ -106,12 +122,21 @@ public:
 
   // children
 
+  int rows() const { return rows_; }
+
+  int cols() const { return cols_; }
+
   int numChildren() const { return children_.size(); }
 
   const std::vector< ItemConstPtr > &children() const { return children_; }
 
   ItemConstPtr child(const int cid) const {
     return (cid >= 0 && cid < children_.size()) ? children_[cid] : ItemConstPtr();
+  }
+
+  ItemConstPtr child(const int row, const int col) const {
+    return (row >= 0 && row < rows_ && col >= 0 && col < cols_) ? children_[row * cols_ + col]
+                                                                : ItemConstPtr();
   }
 
   ItemConstPtr childLevel() const {
@@ -141,19 +166,29 @@ public:
         item->item_id_ = items->size();
         items->push_back(item);
 
+        // set row & col indice
+        const int row(elm.attribute("row", default_row)), col(elm.attribute("col", 0));
+        if (row < 0 || col < 0) {
+          ROS_ERROR_STREAM("Item::itemsFromDescription(): (" << row << ", " << col
+                                                             << ") is out of range");
+          return false;
+        }
+        item->row_ = row;
+        item->col_ = col;
+
         // associate the item with the parent
         if (parent_item) {
-          const int row(elm.attribute("row", default_row));
-          if (row < 0 || row >= parent_item->children_.size()) {
-            ROS_ERROR_STREAM("Item::itemsFromDescription(): '" << row << "' is out of row range");
+          const int cid(row * parent_item->cols_ + col);
+          if (cid < 0 || cid >= parent_item->children_.size()) {
+            ROS_ERROR_STREAM("Item::itemsFromDescription(): child (" << row << ", " << col
+                                                                     << ") is out of range");
+            return false;
+          } else if (parent_item->children_[cid]) {
+            ROS_ERROR_STREAM("Item::itemsFromDescription(): Multiple child items in ("
+                             << row << ", " << col << ")");
             return false;
           }
-          if (parent_item->children_[row]) {
-            ROS_ERROR_STREAM("Item::itemsFromDescription(): Multiple items in the row '" << row
-                                                                                         << "'");
-            return false;
-          }
-          parent_item->children_[row] = item;
+          parent_item->children_[cid] = item;
           item->parent_ = parent_item;
         }
 
@@ -186,12 +221,16 @@ public:
         }
 
         // allocate child items
-        const int rows(elm.attribute("rows", elm.numChildElements()));
-        if (rows < 0) {
-          ROS_ERROR_STREAM("Item::itemsFromDescription(): Invalid row size '" << rows << "'");
+        const int rows(elm.attribute("rows", elm.numChildElements())),
+            cols(elm.attribute("cols", 1));
+        if (rows < 0 || cols < 0) {
+          ROS_ERROR_STREAM("Item::itemsFromDescription(): Invalid child size (" << rows << ", "
+                                                                                << cols << ")");
           return false;
         }
-        item->children_.resize(rows);
+        item->rows_ = rows;
+        item->cols_ = cols;
+        item->children_.resize(rows * cols);
 
         // recursively update the given list
         const std::vector< XmlElementConstPtr > child_elms(elm.childElements());
@@ -228,6 +267,7 @@ protected:
   DisplayType display_type_;
   std::string alt_txt_, img_url_;
   ItemWeakConstPtr parent_;
+  int row_, col_, rows_, cols_;
   std::vector< ItemConstPtr > children_;
 };
 } // namespace mvc_menu_models
