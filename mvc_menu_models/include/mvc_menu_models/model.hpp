@@ -80,17 +80,6 @@ public:
     return false;
   }
 
-  ItemConstPtr sibilingByAngle(double angle) const {
-    // make the given angle positive, or the returned value may be going to be negative
-    while (angle < 0.) {
-      angle += 2. * M_PI;
-    }
-    const int n_sibilings(current_level_->numSibilings());
-    const double span_angle(2. * M_PI / n_sibilings);
-    const int sid(static_cast< int >(std::round(angle / span_angle)) % n_sibilings);
-    return current_level_->sibiling(sid);
-  }
-
   // ***********
   // Description
   // ***********

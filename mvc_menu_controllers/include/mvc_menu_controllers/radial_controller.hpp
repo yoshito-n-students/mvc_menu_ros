@@ -49,7 +49,7 @@ public:
       // update the pointing item
       const double pointing_angle(pointingAngle(joy));
       if (!std::isnan(pointing_angle)) {
-        const mvc_menu_models::ItemConstPtr item_to_point(model_->sibilingByAngle(pointing_angle));
+        const mvc_menu_models::ItemConstPtr item_to_point(sibilingByAngle(pointing_angle));
         if (model_->canPoint(item_to_point)) {
           model_->point(item_to_point);
         }
@@ -92,6 +92,18 @@ protected:
             config_.pointing_axis_threshold * config_.pointing_axis_threshold)
                ? std::atan2(value_h, value_v)
                : std::numeric_limits< double >::quiet_NaN();
+  }
+
+  mvc_menu_models::ItemConstPtr sibilingByAngle(double angle) const {
+    // make the given angle positive, or the returned value may be going to be negative
+    while (angle < 0.) {
+      angle += 2. * M_PI;
+    }
+    const mvc_menu_models::ItemConstPtr level(model_->currentLevel());
+    const int n(level->numSibilings());
+    const double span_angle(2. * M_PI / n);
+    const int sid(static_cast< int >(std::round(angle / span_angle)) % n);
+    return level->sibiling(sid);
   }
 
   void adaptiveSelect(const mvc_menu_models::ItemConstPtr &item) {
